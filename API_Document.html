@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>网易云音乐多功能下载中心 API 文档</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); min-height: 100vh; }
+        .container { max-width: 900px; margin: 48px auto; background: rgba(255,255,255,0.97); border-radius: 24px; box-shadow: 0 8px 32px #fda08555; padding: 48px 40px; }
+        h1 { font-size: 2.5em; font-weight: bold; background: linear-gradient(90deg,#fda085,#f6d365); -webkit-background-clip: text; color: transparent; letter-spacing: 2px; }
+        h2 { color: #f6723a; font-size: 1.5em; margin-top: 2em; }
+        .api-block { background: #fff7f0; border-radius: 14px; box-shadow: 0 2px 8px #fda08533; padding: 22px 24px; margin-bottom: 24px; }
+        .api-title { color: #f6723a; font-weight: bold; font-size: 1.15em; }
+        .api-url { font-family: monospace; color: #388e3c; font-size: 1.08em; }
+        .api-method { font-weight: bold; color: #fff; background: #f6723a; border-radius: 6px; padding: 2px 10px; margin-right: 8px; font-size: 0.98em; }
+        .api-desc { color: #b85c00; margin-bottom: 6px; }
+        .api-params { color: #333; font-size: 0.98em; }
+        .api-sample { background: #222; color: #0f0; font-family: monospace; border-radius: 8px; padding: 10px 14px; margin-top: 8px; font-size: 0.97em; }
+        .copyright { color: #f6723a; font-size: 0.98em; margin-top: 32px; text-align: center; }
+        @media (max-width: 600px) { .container { padding: 18px 4vw; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="mb-4">网易云音乐多功能下载中心<br>API 文档</h1>
+    <div class="mb-4 text-secondary">本页面列出所有可用API接口及其用法，适合开发者和高级用户查阅。</div>
+
+    <div class="api-block">
+        <div class="api-title"><span class="api-method">GET</span> 获取二维码登录 key</div>
+        <div class="api-url">/api/qr_key</div>
+        <div class="api-desc">获取用于扫码登录的唯一 key。</div>
+        <div class="api-sample">返回示例：<br>{"code":200, "data":{"unikey":"xxxx"}}</div>
+    </div>
+
+    <div class="api-block">
+        <div class="api-title"><span class="api-method">GET</span> 生成二维码图片</div>
+        <div class="api-url">/api/qr_create?key=xxxx</div>
+        <div class="api-desc">生成用于扫码登录的二维码图片。</div>
+        <div class="api-params">参数：key（上一步获取的 unikey）</div>
+        <div class="api-sample">返回示例：<br>{"code":200, "data":{"qrimg":"图片URL"}}</div>
+    </div>
+
+    <div class="api-block">
+        <div class="api-title"><span class="api-method">GET</span> 轮询二维码扫码状态</div>
+        <div class="api-url">/api/qr_check?key=xxxx</div>
+        <div class="api-desc">轮询二维码扫码和登录状态。</div>
+        <div class="api-sample">返回示例：<br>{"code":800|801|802|803, ...}</div>
+    </div>
+
+    <div class="api-block">
+        <div class="api-title"><span class="api-method">GET</span> 获取当前登录用户信息</div>
+        <div class="api-url">/api/user_account</div>
+        <div class="api-desc">获取当前登录用户的网易云账号信息。</div>
+        <div class="api-sample">返回示例：<br>{"code":200, "profile":{...}}</div>
+    </div>
+
+    <div class="api-block">
+        <div class="api-title"><span class="api-method">GET</span> 搜索歌曲</div>
+        <div class="api-url">/search?kw=关键词&amp;stype=1</div>
+        <div class="api-desc">根据关键词搜索歌曲。</div>
+        <div class="api-params">参数：kw（关键词），stype=1（歌曲）</div>
+        <div class="api-sample">返回示例：<br>{"result":{"songs":[...]}}</div>
+    </div>
+
+    <div class="api-block">
+        <div class="api-title"><span class="api-method">GET</span> 获取歌曲详情</div>
+        <div class="api-url">/api/song_detail?ids=123,456</div>
+        <div class="api-desc">获取一组歌曲的详细信息（如封面、歌手等）。</div>
+        <div class="api-params">参数：ids（逗号分隔的歌曲ID）</div>
+        <div class="api-sample">返回示例：<br>{"songs":[...]}</div>
+    </div>
+
+    <div class="api-block">
+        <div class="api-title"><span class="api-method">GET</span> 获取歌单全部歌曲</div>
+        <div class="api-url">/api/playlist_tracks?id=歌单ID</div>
+        <div class="api-desc">获取指定歌单的所有歌曲（自动翻页，返回全部）。</div>
+        <div class="api-params">参数：id（歌单ID）</div>
+        <div class="api-sample">返回示例：<br>{"songs":[...]}</div>
+    </div>
+
+    <div class="api-block">
+        <div class="api-title"><span class="api-method">GET</span> 代理下载/试听单曲</div>
+        <div class="api-url">/proxy_download/123456</div>
+        <div class="api-desc">代理网易云下载接口，支持浏览器直接下载或在线播放。</div>
+        <div class="api-params">参数：123456（歌曲ID）</div>
+        <div class="api-sample">返回：音频流（audio/mpeg）</div>
+    </div>
+
+    <div class="api-block">
+        <div class="api-title"><span class="api-method">POST</span> 退出登录</div>
+        <div class="api-url">/logout</div>
+        <div class="api-desc">退出当前登录状态，清除本地会话。</div>
+    </div>
+
+    <div class="api-block">
+        <div class="api-title"><span class="api-method">GET</span> 歌单接口调试页面</div>
+        <div class="api-url">/debug_playlist</div>
+        <div class="api-desc">用于开发者调试 /api/playlist_tracks 接口，输入歌单ID可查看原始返回内容。</div>
+    </div>
+
+    <div class="copyright">© 2024 网易云音乐多功能下载中心 | 仅供学习交流，严禁商用</div>
+</div>
+</body>
+</html> 

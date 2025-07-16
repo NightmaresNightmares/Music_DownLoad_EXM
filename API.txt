@@ -1,0 +1,10 @@
+获取二维码key		http://127.0.0.1:5000/api/qr_key
+生成二维码图片	http://127.0.0.1:5000/api/qr_create?key=xxx
+轮询二维码状态	http://127.0.0.1:5000/api/qr_check?key=xxx
+获取用户信息		http://127.0.0.1:5000/api/user_account
+退出登录			http://127.0.0.1:5000/logout (POST)
+搜索歌曲/歌单		http://127.0.0.1:5000/search?kw=xxx&stype=1
+搜索歌单			http://127.0.0.1:5000/search?kw=xxx&stype=1000
+歌曲详情			http://127.0.0.1:5000/api/song_detail?ids=xxx,yyy,zzz
+歌单所有歌曲		http://127.0.0.1:5000/api/playlist_tracks?id=xxx
+下载/试听		http://127.0.0.1:5000/proxy_download/123456
